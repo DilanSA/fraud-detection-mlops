@@ -35,21 +35,16 @@ El proyecto sigue un flujo de trabajo de Machine Learning que abarca desde la pr
 ```mermaid
 flowchart TD
     A["Dataset de transacciones"] --> B["Preprocesamiento"]
-    B --> C["Separación temporal<br/>Referencia: step ≤ 400<br/>Producción: step ≥ 401"]
-
+    B --> C["Separación temporal: referencia step <= 400 y producción step >= 401"]
     C --> D["Entrenamiento XGBoost original"]
     C --> E["Optimización con RandomizedSearchCV"]
-
     D --> F["Evaluación en producción"]
     E --> F
-
     F --> G["Comparación de modelos"]
     G --> H["Selección del modelo principal"]
     H --> I["Interpretabilidad"]
-
     F --> J["Monitorización retrospectiva"]
     J --> K["Análisis de distribución y prevalencia"]
-
     I --> L["Informes y resultados"]
     K --> L
     L --> M["Registro de experimentos con MLflow"]
