@@ -1,4 +1,4 @@
-# Detección de transacciones fraudulentas con Machine Learning
+[# Detección de transacciones fraudulentas con Machine Learning
 
 ## 1. Descripción del proyecto
 
@@ -30,10 +30,34 @@ La variable objetivo identifica si una transacción es fraudulenta. El conjunto 
 
 ## 4. Flujo de trabajo
 
-1. **Preprocesamiento:** preparación de los datos y transformación de variables categóricas.
-2. **Entrenamiento:** ajuste de un modelo XGBoost inicial y optimización de hiperparámetros.
-3. **Interpretabilidad:** análisis de la importancia de las variables.
-4. **Evaluación y monitorización:** evaluación temporal del rendimiento y comparación de distribuciones entre periodos.
+El proyecto sigue un flujo de trabajo de Machine Learning que abarca desde la preparación de los datos hasta la evaluación temporal y la monitorización retrospectiva.
+
+```mermaid
+flowchart TD
+    A[Dataset de transacciones] --> B[Preprocesamiento]
+    B --> C[Separación temporal]
+    C --> D[Entrenamiento XGBoost original]
+    C --> E[Optimización con RandomizedSearchCV]
+    D --> F[Evaluación en producción]
+    E --> F
+    F --> G[Comparación de modelos]
+    G --> H[Selección del modelo principal]
+    H --> I[Interpretabilidad]
+    F --> J[Monitorización retrospectiva]
+    J --> K[Análisis de distribución y prevalencia]
+    I --> L[Informes y resultados]
+    K --> L
+    L --> M[Registro de experimentos con MLflow]
+```
+
+### Etapas principales
+
+1. **Preprocesamiento:** preparación de variables y transformación de variables categóricas.
+2. **Entrenamiento:** desarrollo del modelo original y optimización de hiperparámetros.
+3. **Evaluación:** comparación de ambos modelos en el periodo temporal de producción.
+4. **Interpretabilidad:** análisis de la importancia de las variables.
+5. **Monitorización:** comparación retrospectiva de las distribuciones y de la prevalencia del fraude.
+6. **Trazabilidad:** registro de experimentos, métricas y artefactos mediante MLflow.
 
 ## 5. Estrategia de evaluación temporal
 
@@ -96,13 +120,38 @@ La prevalencia del fraude aumentó de 0,0774 % en referencia a 0,6491 % en produ
 
 La monitorización implementada corresponde a un análisis retrospectivo; no constituye todavía un sistema automatizado de monitorización en tiempo real.
 
-## 10. Seguimiento de experimentos
+## 10. Seguimiento de experimentos con MLflow
 
-Se utilizó MLflow para registrar los parámetros de la búsqueda de hiperparámetros, las métricas de evaluación y los resultados de comparación entre modelos.
+Se utilizó MLflow para registrar y consultar los experimentos asociados al desarrollo del sistema de detección de transacciones fraudulentas.
 
-La base de datos local de MLflow y los archivos de experimentación no se incluyen directamente en el repositorio.
+El experimento principal se denomina `deteccion_fraude` e incluye ejecuciones relacionadas con la búsqueda de hiperparámetros, la comparación de modelos, el registro de artefactos y la monitorización.
 
-## 11. Estructura del repositorio
+Los elementos registrados incluyen:
+
+- **Modelo de producción:** `xgboost_fraude.joblib`.
+- **Preprocesador:** `preprocessor.joblib`.
+- **Modelo optimizado:** `xgboost_fraude_optimizado.joblib`.
+- **Métricas de evaluación:** Average Precision, ROC-AUC, precisión y recall para fraude, falsas alarmas y fraudes no detectados.
+- **Artefactos de monitorización:** `metricas_produccion.csv`, `data_drift_wasserstein.csv`, `prevalencia_fraude.csv` e `informe_monitorizacion.html`.
+
+La evidencia de ejecución se obtuvo mediante la interfaz de MLflow, donde se verificaron los experimentos, sus métricas y los artefactos registrados.
+
+La base de datos de seguimiento de MLflow y sus archivos internos se almacenan localmente y no se incluyen directamente en el repositorio. Por tanto, la interfaz local no constituye un enlace público de consulta.
+
+**Limitación:** para que un evaluador pueda explorar los experimentos directamente, sería necesario publicar o compartir el seguimiento de MLflow mediante una plataforma accesible externamente. Mientras tanto, el repositorio incluye los informes y resultados necesarios para consultar los principales hallazgos.
+
+## 11. Estrategia de control de versiones
+
+Se utilizó GitHub para gestionar las versiones del proyecto y organizar la integración de cambios.
+
+- **`main`:** rama principal que contiene la versión estable del proyecto.
+- **`development`:** rama de trabajo para incorporar y revisar modificaciones antes de integrarlas en la rama principal.
+- **Pull Requests:** se utilizaron para integrar los cambios entre ramas y mantener un historial de las modificaciones.
+- **Versión `v1.0.0`:** se publicó una versión inicial del proyecto mediante una release de GitHub.
+
+La integración de cambios se realizó mediante Pull Requests entre `main` y `development`, con el objetivo de mantener trazabilidad y separar el desarrollo de la versión estable.
+
+## 12. Estructura del repositorio
 
 - `notebooks/`: cuadernos de preprocesamiento, entrenamiento, interpretabilidad y monitorización.
 - `data/`: documentación y enlace de acceso al conjunto de datos.
@@ -111,20 +160,20 @@ La base de datos local de MLflow y los archivos de experimentación no se incluy
 - `requirements.txt`: dependencias de Python.
 - `.gitignore`: archivos excluidos del control de versiones.
 
-## 12. Requisitos y reproducibilidad
+## 13. Requisitos y reproducibilidad
 
 Se requiere Python y las bibliotecas indicadas en `requirements.txt`. Para reproducir los análisis, descarga el conjunto de datos desde Kaggle y coloca `dataset_proyecto.csv` en el directorio `data/`.
 
 Los notebooks deben ejecutarse siguiendo el orden numérico indicado en sus nombres.
 
-## 13. Limitaciones
+## 14. Limitaciones
 
 - La evaluación se realizó sobre un único periodo temporal de producción.
 - La optimización se realizó sobre una muestra del conjunto de entrenamiento.
 - El umbral de clasificación se fijó en 0,5 para comparar los modelos.
 - Los análisis de distribución no constituyen por sí solos una detección concluyente de concept drift.
-- La monitorización no está automatizada en tiempo real.
+- La monitorización no está automatizada en tiempo real.](http://localhost:5000)
 
-## 14. Tecnologías utilizadas
+## 15. Tecnologías utilizadas
 
 Python, pandas, Polars, NumPy, scikit-learn, XGBoost, SciPy, Matplotlib, Joblib, MLflow y Jupyter Notebook.
