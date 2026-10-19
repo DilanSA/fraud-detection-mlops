@@ -111,8 +111,10 @@ if drift is not None:
     columna_variable = "Variable"
 
     if columna_distancia in drift.columns and columna_variable in drift.columns:
-        grafico = drift.set_index(columna_variable)[columna_distancia]
-        st.bar_chart(grafico)
+        st.bar_chart(
+    drift.set_index(columna_variable)[columna_distancia],
+    horizontal=True
+)
         st.caption(
             "La distancia de Wasserstein cuantifica diferencias entre "
             "distribuciones. Su magnitud depende de la escala de cada variable."
