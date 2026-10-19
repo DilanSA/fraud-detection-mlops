@@ -1,0 +1,10 @@
+polars
+pandas
+numpy
+scikit-learn
+xgboost
+scipy
+matplotlib
+joblib
+mlflow
+jupyter
