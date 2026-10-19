@@ -1,2 +1,0 @@
-periodo,registros,fraudes_reales,umbral,average_precision,roc_auc,precision_fraude,recall_fraude,falsas_alarmas,fraudes_no_detectados
-Produccion (step >= 401),575590,3736,0.5,0.9725766025101377,0.9997795140246672,0.5714066574628011,0.9970556745182013,2794,11
