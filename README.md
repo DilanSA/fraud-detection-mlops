@@ -177,3 +177,5 @@ Los notebooks deben ejecutarse siguiendo el orden numérico indicado en sus nomb
 ## 15. Tecnologías utilizadas
 
 Python, pandas, Polars, NumPy, scikit-learn, XGBoost, SciPy, Matplotlib, Joblib, MLflow y Jupyter Notebook.
+
+La evidencia visual del seguimiento de experimentos con MLflow se encuentra en `reports/evidencia_mflow_monitorizacion.png`. La captura documenta la interfaz local de MLflow y los artefactos registrados durante la evaluación y monitorización del modelo.
